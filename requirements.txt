@@ -1,7 +1,0 @@
-numpy==1.22.3
-protobuf==3.20.2
-protoletariat
-Pillow
-isort
-black @ git+https://github.com/psf/black
-pyserial

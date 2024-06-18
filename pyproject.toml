@@ -1,53 +1,66 @@
-
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools", "setuptools-git-versioning<2", "pyserial-asyncio==0.6", "protobuf==4.23.1"]
 build-backend = "setuptools.build_meta"
 
-
 [project]
-name = "flipperzero_protobuf"
-keywords = ["flipperzero", "protobuf"]
-#version = "0.1.20220806"
-authors = [
-  { name="flipper devices", email="hello@flipperzero.one" },
-  { name="peter shipley", email="peter.shipley@gmail.com" },
-]
-description = "Python bindings for Flipper Zero protobuf protocol"
-
-dependencies = [
-  "numpy==1.21.5",
-  "protobuf==4.21.3",
-  "pyserial",
-  #"protoletariat"
-]
+name = "async-protopy"
+dynamic = ["version"]
+authors = [{ name = "Flipper Devices Inc.", email = "pypi@flipperdevices.com" }]
+description = "Async Flipper Zero Protobuf Client"
 readme = "README.md"
-dynamic = [ "entry-points", "version"]
-# license = { file="LICENSE" }
-license = {text = "BSD 3-Clause License"}
-requires-python = ">=3.7"
+requires-python = ">=3.11"
+keywords = ["protopy", "flipperzero", "async"]
+license = { text = "GPL-3.0" }
+dependencies = [
+  "pyserial-asyncio==0.6",
+  "protobuf==4.23.1"
+]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: BSD License",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Topic :: Software Development",
+    "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
-    "Requires-Dist: protoletariat",
-    "Requires-Dist: pyserial",
-    "Requires-Dist: numpy (>=3.21.5)",
-    "Requires-Dist: protobuf (>=3.12.4)",
 ]
 
-[console_scripts]
-flipperzero_cmd = "flipperzero_protobuf.flipperzero_cmd:main"
-
 [project.urls]
-"Homepage" = "https://github.com/flipperdevices/flipperzero_protobuf_py"
-"Bug Tracker" = "https://github.com/flipperdevices/flipperzero_protobuf_py/issues"
+homepage = "https://github.com/flipperdevices/flipper-async-protopy"
+documentation = "https://github.com/flipperdevices/flipper-async-protopy"
+repository = "https://github.com/flipperdevices/flipper-async-protopy"
+issues = "https://github.com/flipperdevices/flipper-async-protopy/issues"
 
+# https://setuptools-git-versioning.readthedocs.io/en/stable/schemas/file/dev_release_file.html#development-releases-prereleases-from-dev-branch
+[tool.setuptools-git-versioning]
+enabled = true
+version_file = "VERSION.txt"
+count_commits_from_version_file = true
+dev_template = "{tag}.dev{ccount}"
+dirty_template = "{tag}.dev{ccount}"
+#dev_template = "{tag}"
+#dirty_template = "{tag}"
 
 [tool.ruff]
-exclude = [".git", "__pycache__", ".idea",".venv", "flipperzero_protobuf_compiled", "flipperzero_protobuf"]  # TODO: fix
+exclude = [".git", "__pycache__", ".idea",".venv", "flipperzero_protobuf_compiled", "flipperzero_protobuf"]
 line-length = 120
 
 [tool.isort]
 multi_line_output = "3"
 length_sort = true
 reverse_sort = "1"
+
+[tool.poetry]
+name = "async-protopy"
+version = "0.1.0"
+description = ""
+authors = ["Flipper Devices Inc <pypi@flipperdevices.com>"]
+readme = "README.md"
+packages = [{include = "async_protopy"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+protoletariat = "^3.2.19"
+pyserial-asyncio = "0.6"
+protobuf = "4.23.1"
+setuptools = "^70.0.0"
+setuptools-git-versioning = "^2.0.0"
