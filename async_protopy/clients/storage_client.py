@@ -121,14 +121,14 @@ class FlipperStorageProtoClient(FlipperBaseProtoClient):
 
             if (chunk + chunk_size) < data_len:
                 await self.request(
-                    StorageWriteRequestCommand(path=path, file=chunk_data, has_next=True),
+                    StorageWriteRequestCommand(path=path, data=chunk_data, has_next=True),
                     command_id=command_id,
                     wait_for_response=wait_for_response,
                     to_validate=True,
                 )
             else:
                 await self.request(
-                    StorageWriteRequestCommand(path=path, file=chunk_data, has_next=False),
+                    StorageWriteRequestCommand(path=path, data=chunk_data, has_next=False),
                     command_id=command_id,
                     wait_for_response=wait_for_response,
                     to_validate=True,
