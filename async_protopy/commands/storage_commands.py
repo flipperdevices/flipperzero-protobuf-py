@@ -67,15 +67,15 @@ class StorageReadRequestCommand(BaseCommand):
 class StorageWriteRequestCommand(
     BaseCommand,
 ):
-    def __init__(self, path: str, data: bytes, **kwargs):
+    def __init__(self, path: str, file: bytes, **kwargs):
         super().__init__(method_name='storage_write_request', proto_class=storage_pb2.WriteRequest, **kwargs)
         self.path = path
-        self.data = data
+        self.file = file
 
     def create_message(self, command_id):
         cmd_data = self.proto_class()
         cmd_data.path = self.path
-        cmd_data.data = self.data
+        cmd_data.file = self.file
 
         flipper_message = flipper_pb2.Main()
         flipper_message.command_id = command_id
