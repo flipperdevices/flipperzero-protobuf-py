@@ -136,7 +136,7 @@ Quit interactive mode
 ---
 
 ### API Examples: ###
-```
+```python
 #!/usr/bin/env python3
 
 from flipperzero_protobuf.cli_helpers import print_hex, dict2datetime
