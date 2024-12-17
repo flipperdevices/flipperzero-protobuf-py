@@ -504,3 +504,39 @@ class FlipperProtoStorage:
 
         # return sorted(storage_response, key = lambda x: (x['type'], x['name'].lower()))
         return storage_response
+
+    def rpc_storage_untar(self, tar_path, out_path) -> None:
+        """extract a tar archive
+
+        Parameters
+        ----------
+        tar_path : str
+            path to the tar archive file
+            must be a an absolute path to an existing file
+        out_path : str
+            output path to extract files into
+            must be an absolute path to an existing directory
+            with NO trailing slash (/)
+
+        Returns:
+        ---------
+        None
+
+        Raises:
+        ---------
+            FlipperProtoException
+        """
+
+        cmd_data = storage_pb2.TarExtractRequest()
+        cmd_data.tar_path = tar_path
+        cmd_data.out_path = out_path
+
+        rep_data = self._rpc_send_and_read_answer(
+            cmd_data,
+            "storage_tar_extract_request"
+        )
+
+        if rep_data.command_status != 0:
+            raise FlipperProtoException(
+                self.Status_values_by_number[rep_data.command_status].name
+            )

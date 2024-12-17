@@ -142,7 +142,6 @@ class FlipperCMD:
             ("STOP-SESSION",): self.do_stop_session,
             ("START-SESSION",): self.do_start_session,
             ("SEND", "SEND-COMMAND"): self._do_send_cmd,
-            ("REBOOT",): self.do_reboot,
             ("DESKTOP_IS_LOCKED",): self.do_desktop_is_locked,
             ("DESKTOP_UNLOCK",): self.do_desktop_unlock,
             ("REBOOT",): self.do_reboot,
@@ -150,6 +149,7 @@ class FlipperCMD:
             ("XCHG", "DATA-XCHANGE"): self.do_data_exchange,
             ("QUIT", "EXIT"): self.do_quit,
             ("ZIP",): self._do_zip,
+            ("UNTAR",): self.do_untar,
             ("HELP", "?"): self.print_cmd_help,
         }
 
@@ -1330,6 +1330,22 @@ class FlipperCMD:
 
     def do_desktop_unlock(self, cmd, argv):
         print(self.flip.desktop_unlock())
+
+    def do_untar(self, cmd, argv):
+        """extract a tar archive
+        UNTAR <input_file> [output_dir]
+        omit the second argument to extract archive to the same directory
+        """
+        if len(argv) == 1:
+            tar_path = argv[0]
+            out_path = os.path.dirname(argv[0])
+        elif len(argv) == 2:
+            tar_path = argv[0]
+            out_path = argv[1]
+        else:
+            raise cmdException(f"Syntax:\n\t{cmd} <input_file> [output_dir]")
+
+        self.flip.rpc_storage_untar(tar_path, out_path.rstrip("/"))
 
 
 #
